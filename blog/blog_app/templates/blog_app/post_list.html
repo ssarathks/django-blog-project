@@ -1,7 +1,7 @@
 {% extends 'blog_app/base.html' %}
 {% block content %}
     {% for post in post_list %}
-        <div class="post_div">
+        <div class="post_div container-sm">
             <a href="{% url 'blog_app:post_detail' pk=post.id %}">
                 <div class="">
                     <h4>{{post.title|safe|linebreaksbr}}</h4>
