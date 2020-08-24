@@ -1,0 +1,40 @@
+{% extends 'blog_app/base.html'%}
+{% block content%}
+    <div class="post_div">
+        <h3>{{post_detail.title}}</h3>
+        <p>Created By : {{post_detail.author}}</p>
+        {% if post_detail.published_date%}
+            <p>Published On:{{post_detail.published_date}}</p>
+        {% endif%}
+        <br>
+        <p><i>{{post_detail.text}}</i></p>
+        <br>
+        {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'blog_app:post_update' pk=post_detail.pk%}">Edit Post</a>
+        {% endif %}
+        <br>
+        <br>
+        <p><u>Comments : {{post_detail.comments.count}}</u></p>
+        <hr>
+        {% for comment in post_detail.comments.all %}
+            <div>
+                {{comment.comment}}
+                <p>By : {{comment.commenter}} | Created On : {{comment.created_date}}</p>
+                {% if not comment.approved_comment %}
+                    <a href="{% url 'blog_app:comment_approve' pk=comment.pk %}">Approve</a>
+                    <a href="{% url 'blog_app:comment_delete' pk=comment.pk %}">Delete</a>
+                {% endif%}
+            </div>
+            <hr>
+        {% endfor %}
+        <a class="btn btn-warning" href="{% url 'blog_app:add_comment' pk=post_detail.pk%}">Add Comment</a>
+        {% if not post_detail.published_date %}
+            <div>
+                <a href="{% url 'blog_app:post_publish' pk=post_detail.pk %}">Publish</a>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <a class="btn btn-danger" href="{% url 'blog_app:post_delete' pk=post_detail.pk%}">Delete Post</a>        
+        {% endif %}
+    </div>
+{% endblock%}
