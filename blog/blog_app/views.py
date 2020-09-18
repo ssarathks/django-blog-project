@@ -11,7 +11,6 @@ from blog_app.forms import PostForm,CommentForm
 
 class PostListView(ListView):
     model = Post
-
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     
@@ -80,3 +79,24 @@ def comment_delete(request,pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('blog_app:post_detail',pk = post_pk)
+
+counter_value = 0
+def counter(request):
+    return render(request,'blog_app/counter.html',{'counter_value':counter_value})
+
+def change_counter(request,*args,**kwargs):
+    global counter_value
+    if kwargs.get('action') == 'increase':
+        counter_value +=1
+        return redirect('blog_app:counter')
+    if kwargs.get('action') == 'decrease':
+        counter_value -=1
+        return redirect('blog_app:counter')
+    return render(request,'blog_app/counter.html')
+
+def search(request):
+    context ={}
+    query = request.GET.get('search')
+    result = Post.objects.filter(title__icontains = query)
+    context['post_list'] = result
+    return render(request,'blog_app/post_list.html',context)

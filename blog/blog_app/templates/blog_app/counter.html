@@ -1,0 +1,7 @@
+{% extends 'blog_app/base.html' %}
+{% block content %}
+    counter page reached
+    <h3>Current Counter Value: {{counter_value}}</h3>
+    <a href="{% url 'blog_app:change_counter' action='increase'%}">Increase</a>
+    <a href="{% url 'blog_app:change_counter' action='decrease'%}">Decrease</a>
+{% endblock content %}

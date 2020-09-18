@@ -17,6 +17,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from blog_app import views
 from django.contrib.auth.views import login,logout
+from django.conf import settings
 urlpatterns = [
     url(r'^$', views.PostListView.as_view(),name='post_list'),
     url(r'^admin/', admin.site.urls),
@@ -24,3 +25,9 @@ urlpatterns = [
     url(r'^login/', login,name='login'),
     url(r'^logout/', logout,name='logout', kwargs={'next_page':'/'}),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns=[
+        url(r'^__debug__/',include(debug_toolbar.urls))
+    ] + urlpatterns

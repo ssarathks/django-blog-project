@@ -1,0 +1,11 @@
+{% extends 'blog_app/base.html' %}
+{% block content %}
+    {% if results.length == 0 %}
+        <p>No post</p>
+    {% else %}
+        {% for result in  results%}
+            {{result}}
+        {% endfor %}
+    {% endif %}
+    
+{% endblock content %}
