@@ -1,5 +1,6 @@
 """
 test branch for git checking
+finished working and can be added to master
 
 Django settings for blog project.
 
